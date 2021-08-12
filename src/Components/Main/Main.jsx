@@ -11,7 +11,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
 import ViewListIcon from '@material-ui/icons/ViewList';
 import { MainStyle } from './MainStyle';
-import { Students } from '../';
+import { Students, Cohorts } from '../';
 
 export const Main = () => {
   const classes = MainStyle();
@@ -50,6 +50,7 @@ export const Main = () => {
       <main className={classes.content}>
         <Toolbar />
         <Route path='/' exact component={Students} />
+        <Route path='/cohorts' component={Cohorts} />
       </main>
     </div>
   );

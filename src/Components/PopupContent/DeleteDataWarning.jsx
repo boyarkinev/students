@@ -1,11 +1,11 @@
 import Button from '@material-ui/core/Button';
 import { PopupContentStyle } from './PopupContentStyle';
 
-export const DeleteStudentWarning = ({ close, accept }) => {
+export const DeleteDataWarning = ({ close, accept, text }) => {
   const classes = PopupContentStyle();
   return (
     <>
-      <p>Данные студента будут удалены. Продолжить?</p>
+      <p>{text}</p>
       <div className={classes.buttonsGroup}>
         <Button
           className={classes.button}

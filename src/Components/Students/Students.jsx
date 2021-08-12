@@ -8,7 +8,6 @@ import { Divider, Table } from '@material-ui/core';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import TableBody from '@material-ui/core/TableBody';
-import { headers } from '../../data/data';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
@@ -16,26 +15,44 @@ import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormLabel from '@material-ui/core/FormLabel';
 
-import { $students, deleteStudent } from './model';
+import {
+  $students,
+  addStudent,
+  deleteStudent,
+  $studentData,
+  resetStudentData,
+  setStudentData,
+  patchStudent,
+} from './model';
+import { setCohortsNumbers } from '../Cohorts/model';
+
 import { Popup } from '../';
-import { DeleteStudentWarning, AddingForm } from '../';
-import { resetStudentData } from '../PopupContent/model';
+import { DeleteDataWarning, AddingForm } from '../';
+import { studentsFormData } from '../../constants/constants';
 
 export const Students = () => {
   const classes = StudentStyles();
   
   const students = useStore($students);
+  const studentData = useStore($studentData);
+
   const [filter, setFilter] = useState('');
   const [studentId, setStudentId] = useState(null);
   const [button, setButton] = useState(null);
-
-  const handleChange = (event) => {
-    setFilter(event.target.value);
-  };
-
   const [open, setOpen] = useState(false);
+
+  const handleChange = ({ target }) => {
+    setFilter(target.value);
+    target.value === 'Группа' &&
+      students.sort((prev, next) => prev.cohort_number - next.cohort_number);
+    target.value === 'Фамилия' &&
+      students.sort((prev, next) => {
+        if (prev.last_name > next.last_name) return 1;
+        if (prev.last_name < next.last_name) return -1;
+        return 0;
+      });
+  };
 
   const handleOpen = (btn) => {
     setOpen(true);
@@ -52,11 +69,46 @@ export const Students = () => {
     setOpen(false);
   }
 
+  const handleFormChange = ({ target }) => {
+    switch (target.id) {
+      case 'Фамилия':
+        setStudentData({ ...studentData, last_name: target.value });
+        break;
+      case 'Имя':
+        setStudentData({ ...studentData, first_name: target.value });
+        break;
+      case 'Отчество':
+        setStudentData({ ...studentData, mid_name: target.value });
+        break;
+      case 'Дата рождения':
+        setStudentData({ ...studentData, date_of_birth: target.value });
+        break;
+      case 'Группа №':
+        setStudentData({ ...studentData, cohort_number: target.value });
+        break;
+      default:
+        return;
+    }
+  };
+
+  const handleDataSend = () => {
+    setStudentData({ ...studentData, id: Math.round(Math.random()*100000)})
+    addStudent(studentData);
+    setCohortsNumbers(studentData.cohort_number)
+    setOpen(false);
+    resetStudentData();
+  };
+
+  const handleDataPatch = () => {
+    patchStudent(studentData);
+    setOpen(false);
+    resetStudentData();
+  };
+
   return (
     <div className={classes.root}>
       <div className={classes.control}>
         <div className={classes.controlGroup}>
-          <FormLabel className={classes.controlLabel}>Сортировать</FormLabel>
           <FormControl className={classes.formControl}>
             <Select
               value={filter}
@@ -64,10 +116,13 @@ export const Students = () => {
               displayEmpty
               className={classes.selectEmpty}>
               <MenuItem className={classes.selectMenu} value={''}>
-                Фамилия
+                Сортировать
               </MenuItem>
-              <MenuItem className={classes.selectMenu} value={20}>
-                Группа
+              <MenuItem className={classes.selectMenu} value={'Фамилия'}>
+                По фамилии
+              </MenuItem>
+              <MenuItem className={classes.selectMenu} value={'Группа'}>
+                По группе
               </MenuItem>
             </Select>
           </FormControl>
@@ -87,30 +142,37 @@ export const Students = () => {
         <Table>
           <TableHead>
             <TableRow>
-              {headers.map((header) => (
+              {studentsFormData.map((header) => (
                 <TableCell
                   align={
-                    header.id === 'cohort' || header.id === 'date_of_birth'
+                    Object.keys(header).toString() === 'cohort_number' ||
+                    Object.keys(header).toString() === 'date_of_birth'
                       ? 'center'
                       : 'left'
                   }
-                  key={header.id}>
-                  {header.label}
+                  key={Object.keys(header)}>
+                  {Object.values(header)}
                 </TableCell>
               ))}
               <TableCell align='center'></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {students.map((student) => (
-              <TableRow className={classes.tableRow} key={student.last_name}>
+            {students.map((student, i) => (
+              <TableRow className={classes.tableRow} key={i}>
                 <TableCell align='left'>{student.last_name}</TableCell>
                 <TableCell align='left'>{student.first_name}</TableCell>
                 <TableCell align='left'>{student.mid_name}</TableCell>
                 <TableCell align='center'>{student.date_of_birth}</TableCell>
-                <TableCell align='center'>{student.cohort}</TableCell>
+                <TableCell align='center'>{student.cohort_number}</TableCell>
                 <TableCell align='center'>
-                  <IconButton aria-label='edit'>
+                  <IconButton
+                    aria-label='edit'
+                    onClick={() => {
+                      handleOpen('edit');
+                      setStudentData(student);
+                      setOpen(true);
+                    }}>
                     <EditIcon />
                   </IconButton>
                   <IconButton
@@ -130,11 +192,22 @@ export const Students = () => {
 
       <Popup open={open} close={handleClose}>
         {button === 'delete' && (
-          <DeleteStudentWarning close={handleClose} accept={handleDeleteData} />
+          <DeleteDataWarning
+            close={handleClose}
+            accept={handleDeleteData}
+            text='Данные студента будут удалены. Продолжить?'
+          />
         )}
 
-        {button === 'add' && (
-          <AddingForm close={handleClose} setOpen={setOpen} />
+        {(button === 'add' || button === 'edit') && (
+          <AddingForm
+            close={handleClose}
+            formData={studentsFormData}
+            handleChange={handleFormChange}
+            data={studentData}
+            setData={setStudentData}
+            handlePushData={button === 'add' ? handleDataSend : handleDataPatch}
+          />
         )}
       </Popup>
     </div>
