@@ -22,5 +22,6 @@
 
 ## Libraries
 
+* [ReactJS](https://reactjs.org)
 * [Effector](https://effector.dev/ru/)
 * [Material-UI](https://material-ui.com/ru/)
