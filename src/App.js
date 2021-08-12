@@ -1,8 +1,12 @@
 import './App.css';
 
+import { Main } from './Components/';
+
 function App() {
   return (
-    <h1>Beginning</h1>
+    <div className='app'>
+      <Main />
+    </div>
   );
 }
 
