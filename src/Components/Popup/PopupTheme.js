@@ -9,7 +9,6 @@ export const useStyles = makeStyles((theme) => ({
   paper: {
     backgroundColor: theme.palette.background.paper,
     borderRadius: '4px',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(3, 4, 3),
+    padding: theme.spacing(2, 1.2, 3),
   },
 }));

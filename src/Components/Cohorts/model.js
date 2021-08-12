@@ -6,13 +6,8 @@ export const patchCohort = createEvent();
 export const $cohorts = createStore([
   {
     id: 1001,
-    faculty: 'Историко-филологический',
-    cohort_number: 101,
-  },
-  {
-    id: 1002,
     faculty: 'Физико-математический',
-    cohort_number: 102,
+    cohort_number: 101,
   },
 ])
   .on(addCohort, (oldData, data) => [...oldData, data])

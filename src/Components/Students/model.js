@@ -10,7 +10,7 @@ export const $students = createStore([
     first_name: 'Иван',
     mid_name: 'Иванович',
     date_of_birth: '01.02.2005',
-    cohort_number: 103,
+    cohort_number: 401,
   },
   {
     id: 5678,
@@ -18,7 +18,7 @@ export const $students = createStore([
     first_name: 'Петр',
     mid_name: 'Петрович',
     date_of_birth: '02.03.2004',
-    cohort_number: 102,
+    cohort_number: 101,
   },
 ])
   .on(addStudent, (oldData, data) => [...oldData, data])

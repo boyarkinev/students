@@ -1,29 +1,24 @@
 import React from 'react';
-import Modal from '@material-ui/core/Modal';
-import Backdrop from '@material-ui/core/Backdrop';
-import Fade from '@material-ui/core/Fade';
 import { useStyles } from './PopupTheme';
+
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
 
 export const Popup = ({ open, close, children }) => {
   const classes = useStyles();
 
   return (
     <>
-      <Modal
-        aria-labelledby='transition-modal-title'
-        aria-describedby='transition-modal-description'
-        className={classes.modal}
+      <Dialog
         open={open}
         onClose={close}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}>
-        <Fade in={open}>
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogContent>
           <div className={classes.paper}>{children}</div>
-        </Fade>
-      </Modal>
+        </DialogContent>
+      </Dialog>
     </>
   );
 };
