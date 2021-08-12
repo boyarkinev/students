@@ -25,7 +25,6 @@ export const AddingForm = (props) => {
       {children}
       <div className={classes.buttonsGroup}>
         <Button
-          // disabled={}
           className={classes.button}
           variant='contained'
           color='primary'

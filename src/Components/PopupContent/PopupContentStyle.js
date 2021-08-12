@@ -2,7 +2,6 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export const PopupContentStyle = makeStyles((theme) => ({
   root: {
-    minWidth: '250px',
     display: 'flex',
     flexDirection: 'column',
   },

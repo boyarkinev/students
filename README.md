@@ -1,4 +1,4 @@
-# Students info system
+# [Students info system](https://boyarkinev.github.io/students/)
 
 ## Project structure
 

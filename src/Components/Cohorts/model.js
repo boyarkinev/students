@@ -33,8 +33,6 @@ export const $cohortData = createStore({
   .on(setCohortData, (_, data) => data)
   .reset(resetCohortData);
 
-// $cohortData.watch(data => console.log(data))
-
 export const setCohortsNumbers = createEvent();
 export const $cohortsNumbers = createStore([101, 201, 301, 401, 501])
   .on(setCohortsNumbers, (oldData, num) => [...oldData, num]);

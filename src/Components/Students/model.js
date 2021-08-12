@@ -29,8 +29,6 @@ export const $students = createStore([
     [...oldData.map((item) => item.id === data.id ? data : item)]
   );
 
-// $students.watch(data => console.log(data))
-
 export const setStudentData = createEvent();
 export const resetStudentData = createEvent();
 export const $studentData = createStore(
@@ -45,5 +43,3 @@ export const $studentData = createStore(
 )
 .on(setStudentData, (_, data) => data)
 .reset(resetStudentData);
-
-// $studentData.watch(data => console.log(data))

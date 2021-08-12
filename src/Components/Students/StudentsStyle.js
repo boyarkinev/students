@@ -32,10 +32,4 @@ export const StudentStyles = makeStyles((theme) => ({
   selectMenu: {
     fontSize: '14px',
   },
-  tableRow: {
-    // transition: '.3s',
-    // '&:hover': {
-    //   opacity: '.4',
-    // },
-  },
 }));
