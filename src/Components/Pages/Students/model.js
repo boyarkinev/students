@@ -9,7 +9,7 @@ export const $students = createStore([
     last_name: 'Иванов',
     first_name: 'Иван',
     mid_name: 'Иванович',
-    date_of_birth: '01.02.2005',
+    date_of_birth: '2005-02-01',
     cohort_number: 401,
   },
   {
@@ -17,7 +17,7 @@ export const $students = createStore([
     last_name: 'Петров',
     first_name: 'Петр',
     mid_name: 'Петрович',
-    date_of_birth: '02.03.2004',
+    date_of_birth: '2004-02-03',
     cohort_number: 101,
   },
 ])
