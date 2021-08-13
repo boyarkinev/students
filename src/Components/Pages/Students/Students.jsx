@@ -1,7 +1,8 @@
+import { Styles } from '../Styles';
+
 import { useState } from 'react';
 import { useStore } from 'effector-react';
 
-import { StudentStyles } from './StudentsStyle';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import { Divider, Table } from '@material-ui/core';
@@ -27,12 +28,12 @@ import {
 } from './model';
 import { setCohortsNumbers } from '../Cohorts/model';
 
-import { Popup } from '../';
-import { DeleteDataWarning, AddingForm } from '../';
-import { studentsFormData } from '../../constants/constants';
+import { Popup } from '../..';
+import { DeleteDataWarning, AddingForm } from '../..';
+import { studentsFormData } from '../../../constants/constants';
 
 export const Students = () => {
-  const classes = StudentStyles();
+  const classes = Styles();
   
   const students = useStore($students);
   const studentData = useStore($studentData);
@@ -160,12 +161,12 @@ export const Students = () => {
           <TableBody>
             {students.map((student, i) => (
               <TableRow className={classes.tableRow} key={i}>
-                <TableCell align='left'>{student.last_name}</TableCell>
-                <TableCell align='left'>{student.first_name}</TableCell>
-                <TableCell align='left'>{student.mid_name}</TableCell>
-                <TableCell align='center'>{student.date_of_birth}</TableCell>
-                <TableCell align='center'>{student.cohort_number}</TableCell>
-                <TableCell align='center'>
+                <TableCell className={classes.tableRow} align='left'>{student.last_name}</TableCell>
+                <TableCell className={classes.tableRow} align='left'>{student.first_name}</TableCell>
+                <TableCell className={classes.tableRow} align='left'>{student.mid_name}</TableCell>
+                <TableCell className={classes.tableRow} align='center'>{student.date_of_birth}</TableCell>
+                <TableCell className={classes.tableRow} align='center'>{student.cohort_number}</TableCell>
+                <TableCell className={classes.tableRow} align='center'>
                   <IconButton
                     aria-label='edit'
                     onClick={() => {

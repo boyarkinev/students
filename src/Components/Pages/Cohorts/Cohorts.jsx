@@ -1,7 +1,8 @@
+import { Styles } from '../Styles';
+
 import { useState } from 'react';
 import { useStore } from 'effector-react';
 
-import { CohortsStyle } from './CohortsStyle';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import { Divider, Table } from '@material-ui/core';
@@ -28,12 +29,12 @@ import {
   $cohortsNumbers,
 } from './model';
 
-import { Popup } from '../';
-import { DeleteDataWarning, AddingForm } from '../';
-import { cohortsFormData } from '../../constants/constants';
+import { Popup } from '../..';
+import { DeleteDataWarning, AddingForm } from '../..';
+import { cohortsFormData } from '../../../constants/constants';
 
 export const Cohorts = () => {
-  const classes = CohortsStyle();
+  const classes = Styles();
   
   const cohorts = useStore($cohorts);
   const cohortData = useStore($cohortData);

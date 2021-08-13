@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-export const StudentStyles = makeStyles((theme) => ({
+export const Styles = makeStyles((theme) => ({
   root: {
     width: '100%',
   },
@@ -31,5 +31,8 @@ export const StudentStyles = makeStyles((theme) => ({
   },
   selectMenu: {
     fontSize: '14px',
+  },
+  tableRow: {
+    padding: theme.spacing(1),
   },
 }));

@@ -33,7 +33,7 @@ export const setStudentData = createEvent();
 export const resetStudentData = createEvent();
 export const $studentData = createStore(
   {
-    id: null,
+    id: '',
     last_name: '',
     first_name: '',
     mid_name: '',
