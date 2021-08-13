@@ -18,6 +18,12 @@ export const AddingForm = (props) => {
     }
   }, [data]);
 
+  const fieldType = (field) => {
+    if (field === 'date_of_birth') return 'date';
+    if (field === 'cohort_number') return 'number';
+    return 'text'
+  }
+
   return (
     <form className={classes.root} noValidate autoComplete='off'>
       {formData.map((label, i) => (
@@ -27,8 +33,9 @@ export const AddingForm = (props) => {
           value={data[Object.keys(label)]}
           className={classes.field}
           id={Object.values(label).toString()}
-          label={Object.values(label)}
+          label={Object.values(label).toString() !== 'Дата рождения' && Object.values(label)}
           onChange={handleChange}
+          type={fieldType(Object.keys(label).toString())}
         />
       ))}
       {children}
